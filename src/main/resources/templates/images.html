@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>لیست تصاویر</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        img {
+            max-width: 200px; /* اندازه تصویر را می‌توانید تغییر دهید */
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+<h1>لیست تصاویر ذخیره‌شده</h1>
+<table>
+    <tr>
+        <th>شناسه</th>
+        <th>تصویر</th>
+        <th>متن استخراج‌شده</th>
+    </tr>
+    <tr th:each="image : ${images}">
+        <td th:text="${image.id}"></td>
+        <td><img th:src="${image.imageBase64}" alt="تصویر آپلودشده" /></td>
+        <td th:text="${image.extractedText}"></td>
+    </tr>
+</table>
+<a href="/">بازگشت به صفحه اصلی</a>
+</body>
+</html>

@@ -1,10 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>آپلود عکس و OCR</title>
 </head>
 <body>
-$END$
+<h1>آپلود عکس و استخراج متن</h1>
+<p th:text="${message}"></p>
+
+<form method="POST" action="/upload" enctype="multipart/form-data">
+    <input type="file" name="file" accept="image/*" />
+    <button type="submit">آپلود</button>
+</form>
+
+<div th:if="${extractedText}">
+    <h2>متن استخراج‌شده:</h2>
+    <p th:text="${extractedText}"></p>
+</div>
 </body>
 </html>

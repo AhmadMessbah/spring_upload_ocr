@@ -1,4 +1,4 @@
-FROM ubuntu:latest
-LABEL authors="Ahmad"
-
-ENTRYPOINT ["top", "-b"]
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY target/spring_upload_ocr-0.0.1-SNAPSHOT.jar app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
