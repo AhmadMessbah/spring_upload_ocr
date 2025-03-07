@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>جزئیات تصویر</title>
+  <style>
+    img {
+      max-width: 500px;
+      height: auto;
+    }
+    .container {
+      text-align: center;
+      margin: 20px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>جزئیات تصویر</h1>
+  <p>شناسه: <span th:text="${image.id}"></span></p>
+  <img th:src="${imageBase64}" alt="تصویر آپلودشده" />
+  <p>متن استخراج‌شده:</p>
+  <p th:text="${image.extractedText}"></p>
+  <a th:href="'/image/' + ${image.id} + '/download'" download>دانلود تصویر</a>
+  <br><br>
+  <a href="/images">بازگشت به لیست</a>
+</div>
+</body>
+</html>

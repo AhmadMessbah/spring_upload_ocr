@@ -3,10 +3,14 @@ package com.spring_upload_ocr.controller;
 import com.spring_upload_ocr.entity.ImageEntity;
 import com.spring_upload_ocr.repository.ImageRepository;
 import com.spring_upload_ocr.service.OcrService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import com.spring_upload_ocr.common.ImageView;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -64,5 +68,26 @@ public class ImageController {
                 .collect(Collectors.toList());
         model.addAttribute("images", imageViews);
         return "images";
+    }
+
+    @GetMapping("/image/{id}")
+    public String viewImage(@PathVariable String id, Model model) {
+        ImageEntity image = imageRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("شناسه نامعتبر: " + id));
+        String imageBase64 = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(image.getImageData());
+        model.addAttribute("image", image);
+        model.addAttribute("imageBase64", imageBase64);
+        return "image-detail";
+    }
+
+    // دانلود تصویر
+    @GetMapping("/image/{id}/download")
+    public ResponseEntity<byte[]> downloadImage(@PathVariable String id) {
+        ImageEntity image = imageRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("شناسه نامعتبر: " + id));
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"image-" + id + ".jpg\"")
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(image.getImageData());
     }
 }

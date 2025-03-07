@@ -18,4 +18,9 @@ public class ImageEntity {
     private String id;
     private byte[] imageData;
     private String extractedText;
+
+    public ImageEntity(byte[] imageData, String extractedText) {
+        this.imageData = imageData;
+        this.extractedText = extractedText;
+    }
 }
